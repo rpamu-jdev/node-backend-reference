@@ -38,6 +38,7 @@ sequelize.sync().then(() => {
 
   server.listen(PORT,'0.0.0.0', () => {
     console.log(`🚀 REST + SOAP running at http://localhost:${PORT}`);
+    console.log(`🚀 REST + SOAP running at http://localhost:${PORT}`);
     console.log(`🧼 SOAP WSDL: http://localhost:${PORT}/soap/bookservice?wsdl`);
   });
 });
