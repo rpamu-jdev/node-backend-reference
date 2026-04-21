@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: extio-learn
-          image: ext-hyd-ct-reg.extio.io:3000/extio-learn:0.0.6-RELEASE
+          image: ext-hyd-linux-pg.extio.io:3000/extio-learn:0.0.6-RELEASE
           ports:
             - containerPort: 8443
           env:
