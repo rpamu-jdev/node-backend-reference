@@ -1,0 +1,52 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: mern-postgres
+    environment:
+      POSTGRES_USER: az_postgress_user
+      POSTGRES_PASSWORD: NwQsR@404#123
+      POSTGRES_DB: extio_learn_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U az_postgress_user"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: ./node-backend-reference
+    container_name: mern-backend
+    environment:
+      DB_NAME: extio_learn_db
+      DB_USER: az_postgress_user
+      DB_PASS: NwQsR@404#123
+      DB_HOST: postgres
+      DB_PORT: 5432
+      PORT: 8443
+      JWT_SECRET: your_super_secret_jwt_key_change_this_in_production
+      NODE_ENV: development
+    ports:
+      - "8443:8443"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: npm run dev
+
+  frontend:
+    build: ./book-app-frontend
+    container_name: mern-frontend
+    environment:
+      VITE_API_URL: http://backend:8443/api
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    command: npm run dev
+    stdin_open: true
+    tty: true
+
+volumes:
+  postgres_data:

@@ -6,7 +6,7 @@ export const verifyToken = (req, res, next) => {
 
   const token = authHeader.split(" ")[1];
   try {
-    jwt.verify(token, "SECRET123");
+    jwt.verify(token, process.env.JWT_SECRET || "SECRET123");
     next();
   } catch {
     res.status(401).json({ message: "Invalid token" });

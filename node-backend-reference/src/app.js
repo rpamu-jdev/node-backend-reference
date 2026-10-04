@@ -18,6 +18,17 @@ const __dirname = path.dirname(__filename);
 const app = express();
 app.use(bodyParser.json());
 
+// Enable CORS
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
+  next();
+});
+
 // REST routes
 app.use("/api/books", bookRoutes);
 app.use("/api/auth", authRoutes);
